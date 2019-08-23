@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name Pi-I2C-rescue)(type Legacy)(uri ${KIPRJMOD}/Pi-I2C-rescue.lib)(options "")(descr ""))
+)

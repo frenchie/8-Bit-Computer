@@ -1,0 +1,307 @@
+EESchema Schematic File Version 4
+LIBS:8-Bit CPU-cache
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 30 30
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L MCU_Microchip_ATtiny:ATtiny45-20SU U53
+U 1 1 5D713915
+P 5000 3600
+F 0 "U53" H 4471 3646 50  0000 R CNN
+F 1 "ATtiny45-20SU" H 4471 3555 50  0000 R CNN
+F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 5000 3600 50  0001 C CIN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/atmel-2586-avr-8-bit-microcontroller-attiny25-attiny45-attiny85_datasheet.pdf" H 5000 3600 50  0001 C CNN
+	1    5000 3600
+	1    0    0    -1  
+$EndComp
+Text Label 5850 3800 2    50   ~ 0
+~RESET
+Wire Wire Line
+	5600 3700 5900 3700
+Wire Wire Line
+	5600 3500 5850 3500
+Text Label 5850 3500 2    50   ~ 0
+SCK
+Text Label 5850 3400 2    50   ~ 0
+MISO
+Text Label 5850 3300 2    50   ~ 0
+MOSI
+Text HLabel 7350 3300 2    50   Input ~ 0
+~HLT
+Text HLabel 7350 3400 2    50   Input ~ 0
+EN
+Text HLabel 5900 3700 2    50   Output ~ 0
+CLK
+$Comp
+L power:VCC #PWR0292
+U 1 1 5D714B96
+P 5000 3000
+F 0 "#PWR0292" H 5000 2850 50  0001 C CNN
+F 1 "VCC" H 5017 3173 50  0000 C CNN
+F 2 "" H 5000 3000 50  0001 C CNN
+F 3 "" H 5000 3000 50  0001 C CNN
+	1    5000 3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0293
+U 1 1 5D71501A
+P 5000 4200
+F 0 "#PWR0293" H 5000 3950 50  0001 C CNN
+F 1 "GND" H 5005 4027 50  0000 C CNN
+F 2 "" H 5000 4200 50  0001 C CNN
+F 3 "" H 5000 4200 50  0001 C CNN
+	1    5000 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5D717CB9
+P 5850 4250
+AR Path="/5D5738D6/5D717CB9" Ref="C?"  Part="1" 
+AR Path="/5D450B31/5D717CB9" Ref="C?"  Part="1" 
+AR Path="/5D4645A0/5D717CB9" Ref="C?"  Part="1" 
+AR Path="/5D4755BD/5D47F7B7/5D717CB9" Ref="C?"  Part="1" 
+AR Path="/5D643828/5D4645A0/5D717CB9" Ref="C?"  Part="1" 
+AR Path="/5D5F87DE/5D717CB9" Ref="C?"  Part="1" 
+AR Path="/5D5F87DE/5D6FC11A/5D717CB9" Ref="C64"  Part="1" 
+F 0 "C64" H 5965 4296 50  0000 L CNN
+F 1 "100n" H 5965 4205 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric" H 5888 4100 50  0001 C CNN
+F 3 "~" H 5850 4250 50  0001 C CNN
+	1    5850 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5D717CBF
+P 5850 4400
+AR Path="/5D5738D6/5D717CBF" Ref="#PWR?"  Part="1" 
+AR Path="/5D450B31/5D717CBF" Ref="#PWR?"  Part="1" 
+AR Path="/5D4645A0/5D717CBF" Ref="#PWR?"  Part="1" 
+AR Path="/5D4755BD/5D47F7B7/5D717CBF" Ref="#PWR?"  Part="1" 
+AR Path="/5D643828/5D4645A0/5D717CBF" Ref="#PWR?"  Part="1" 
+AR Path="/5D5F87DE/5D717CBF" Ref="#PWR?"  Part="1" 
+AR Path="/5D5F87DE/5D6FC11A/5D717CBF" Ref="#PWR0295"  Part="1" 
+F 0 "#PWR0295" H 5850 4150 50  0001 C CNN
+F 1 "GND" H 5855 4227 50  0000 C CNN
+F 2 "" H 5850 4400 50  0001 C CNN
+F 3 "" H 5850 4400 50  0001 C CNN
+	1    5850 4400
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:VCC #PWR?
+U 1 1 5D717CC5
+P 5850 4100
+AR Path="/5D5F87DE/5D717CC5" Ref="#PWR?"  Part="1" 
+AR Path="/5D5F87DE/5D6FC11A/5D717CC5" Ref="#PWR0294"  Part="1" 
+F 0 "#PWR0294" H 5850 3950 50  0001 C CNN
+F 1 "VCC" H 5867 4273 50  0000 C CNN
+F 2 "" H 5850 4100 50  0001 C CNN
+F 3 "" H 5850 4100 50  0001 C CNN
+	1    5850 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x06 J?
+U 1 1 5D71DF64
+P 6950 4000
+AR Path="/5D71DF64" Ref="J?"  Part="1" 
+AR Path="/5D39D95E/5D71DF64" Ref="J?"  Part="1" 
+AR Path="/5D3E4F90/5D71DF64" Ref="J?"  Part="1" 
+AR Path="/5D5DCCF9/5D71DF64" Ref="J?"  Part="1" 
+AR Path="/5D5C9807/5D71DF64" Ref="J?"  Part="1" 
+AR Path="/5D5F87DE/5D6FC11A/5D71DF64" Ref="J6"  Part="1" 
+F 0 "J6" H 7030 3992 50  0000 L CNN
+F 1 "AVRISP" H 7030 3901 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical" H 6950 4000 50  0001 C CNN
+F 3 "~" H 6950 4000 50  0001 C CNN
+	1    6950 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5D71DF6A
+P 6650 4350
+AR Path="/5D71DF6A" Ref="#PWR?"  Part="1" 
+AR Path="/5D39D95E/5D71DF6A" Ref="#PWR?"  Part="1" 
+AR Path="/5D3E4F90/5D71DF6A" Ref="#PWR?"  Part="1" 
+AR Path="/5D5DCCF9/5D71DF6A" Ref="#PWR?"  Part="1" 
+AR Path="/5D5C9807/5D71DF6A" Ref="#PWR?"  Part="1" 
+AR Path="/5D5F87DE/5D6FC11A/5D71DF6A" Ref="#PWR0298"  Part="1" 
+F 0 "#PWR0298" H 6650 4100 50  0001 C CNN
+F 1 "GND" H 6655 4177 50  0000 C CNN
+F 2 "" H 6650 4350 50  0001 C CNN
+F 3 "" H 6650 4350 50  0001 C CNN
+	1    6650 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6650 4350 6650 4300
+Wire Wire Line
+	6650 4300 6750 4300
+Wire Wire Line
+	6500 4100 6750 4100
+Wire Wire Line
+	6500 4000 6750 4000
+$Comp
+L power:VCC #PWR?
+U 1 1 5D71DF75
+P 6750 3900
+AR Path="/5D71DF75" Ref="#PWR?"  Part="1" 
+AR Path="/5D39D95E/5D71DF75" Ref="#PWR?"  Part="1" 
+AR Path="/5D3E4F90/5D71DF75" Ref="#PWR?"  Part="1" 
+AR Path="/5D5DCCF9/5D71DF75" Ref="#PWR?"  Part="1" 
+AR Path="/5D5C9807/5D71DF75" Ref="#PWR?"  Part="1" 
+AR Path="/5D5F87DE/5D6FC11A/5D71DF75" Ref="#PWR0300"  Part="1" 
+F 0 "#PWR0300" H 6750 3750 50  0001 C CNN
+F 1 "VCC" V 6750 4000 50  0000 L CNN
+F 2 "" H 6750 3900 50  0001 C CNN
+F 3 "" H 6750 3900 50  0001 C CNN
+	1    6750 3900
+	0    -1   -1   0   
+$EndComp
+Text Label 6500 4000 0    50   ~ 0
+SCK
+Text Label 6500 4100 0    50   ~ 0
+MOSI
+Text Label 6500 3800 0    50   ~ 0
+MISO
+Wire Wire Line
+	6750 3800 6500 3800
+Text Label 6500 4200 0    50   ~ 0
+~RESET
+Wire Wire Line
+	5600 3800 5850 3800
+Wire Wire Line
+	6500 4200 6750 4200
+$Comp
+L Device:R_Pack04 RN?
+U 1 1 5D754D36
+P 6950 3300
+AR Path="/5D47FE2A/5D4F3A9B/5D754D36" Ref="RN?"  Part="1" 
+AR Path="/5D49BC05/5D4F3A9B/5D754D36" Ref="RN?"  Part="1" 
+AR Path="/5D51F1A5/5D4F3A9B/5D754D36" Ref="RN?"  Part="1" 
+AR Path="/5D5718A3/5D754D36" Ref="RN?"  Part="1" 
+AR Path="/5D6D875D/5D5718A3/5D754D36" Ref="RN?"  Part="1" 
+AR Path="/5D7088B6/5D408B74/5D754D36" Ref="RN?"  Part="1" 
+AR Path="/5D643828/5D450B31/5D5FFFE8/5D754D36" Ref="RN?"  Part="1" 
+AR Path="/5D643828/5D430931/5D754D36" Ref="RN?"  Part="1" 
+AR Path="/5D613953/5D5AF10D/5D754D36" Ref="RN?"  Part="1" 
+AR Path="/5D613953/5D5E5DC0/5D754D36" Ref="RN?"  Part="1" 
+AR Path="/5D5EAD14/5D754D36" Ref="RN?"  Part="1" 
+AR Path="/5D5F87DE/5D6FC11A/5D754D36" Ref="RN31"  Part="1" 
+F 0 "RN31" V 6533 3300 50  0000 C CNN
+F 1 "10k" V 6624 3300 50  0000 C CNN
+F 2 "Resistor_SMD:R_Array_Concave_4x0603" V 7225 3300 50  0001 C CNN
+F 3 "~" H 6950 3300 50  0001 C CNN
+	1    6950 3300
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	7150 3200 7250 3200
+Wire Wire Line
+	7250 3200 7250 3300
+Wire Wire Line
+	7250 3300 7150 3300
+Wire Wire Line
+	7250 3300 7350 3300
+Connection ~ 7250 3300
+Wire Wire Line
+	5600 3300 5850 3300
+Wire Wire Line
+	5600 3400 5850 3400
+$Comp
+L power:VCC #PWR0301
+U 1 1 5D75664A
+P 7150 3100
+F 0 "#PWR0301" H 7150 2950 50  0001 C CNN
+F 1 "VCC" V 7167 3228 50  0000 L CNN
+F 2 "" H 7150 3100 50  0001 C CNN
+F 3 "" H 7150 3100 50  0001 C CNN
+	1    7150 3100
+	0    1    1    0   
+$EndComp
+Text Label 6500 3400 0    50   ~ 0
+MOSI
+Text Label 6500 3100 0    50   ~ 0
+~RESET
+Wire Wire Line
+	6500 3100 6750 3100
+Wire Wire Line
+	6500 3300 6750 3300
+Text Label 6500 3300 0    50   ~ 0
+MISO
+Wire Wire Line
+	6500 3400 6750 3400
+Wire Wire Line
+	7350 3400 7150 3400
+$Comp
+L power:VCC #PWR0299
+U 1 1 5D755BBC
+P 6750 3200
+F 0 "#PWR0299" H 6750 3050 50  0001 C CNN
+F 1 "VCC" V 6768 3327 50  0000 L CNN
+F 2 "" H 6750 3200 50  0001 C CNN
+F 3 "" H 6750 3200 50  0001 C CNN
+	1    6750 3200
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R_POT RV1
+U 1 1 5D75F28B
+P 6250 3600
+F 0 "RV1" H 6180 3646 50  0000 R CNN
+F 1 "50k" H 6180 3555 50  0000 R CNN
+F 2 "jcf:BOURNS-3310Y" H 6250 3600 50  0001 C CNN
+F 3 "~" H 6250 3600 50  0001 C CNN
+	1    6250 3600
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	5600 3600 6100 3600
+Wire Wire Line
+	6250 3750 6250 3850
+$Comp
+L power:GND #PWR?
+U 1 1 5D760959
+P 6250 3850
+AR Path="/5D760959" Ref="#PWR?"  Part="1" 
+AR Path="/5D39D95E/5D760959" Ref="#PWR?"  Part="1" 
+AR Path="/5D3E4F90/5D760959" Ref="#PWR?"  Part="1" 
+AR Path="/5D5DCCF9/5D760959" Ref="#PWR?"  Part="1" 
+AR Path="/5D5C9807/5D760959" Ref="#PWR?"  Part="1" 
+AR Path="/5D5F87DE/5D6FC11A/5D760959" Ref="#PWR0297"  Part="1" 
+F 0 "#PWR0297" H 6250 3600 50  0001 C CNN
+F 1 "GND" H 6255 3677 50  0000 C CNN
+F 2 "" H 6250 3850 50  0001 C CNN
+F 3 "" H 6250 3850 50  0001 C CNN
+	1    6250 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:VCC #PWR0296
+U 1 1 5D760BF8
+P 6250 3350
+F 0 "#PWR0296" H 6250 3200 50  0001 C CNN
+F 1 "VCC" H 6267 3523 50  0000 C CNN
+F 2 "" H 6250 3350 50  0001 C CNN
+F 3 "" H 6250 3350 50  0001 C CNN
+	1    6250 3350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6250 3450 6250 3350
+$EndSCHEMATC
