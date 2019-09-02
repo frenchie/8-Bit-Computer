@@ -4,7 +4,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 12 30
+Sheet 12 29
 Title ""
 Date ""
 Rev ""
@@ -718,6 +718,8 @@ Wire Wire Line
 	4900 4300 5300 4300
 Wire Wire Line
 	4900 4200 5300 4200
+Text Notes 5950 2700 0    100  ~ 0
+Using these pins as inputs isn’t the best idea.\nMake PortD Input PortB Output
 Wire Bus Line
 	6000 5100 6000 5800
 Wire Bus Line

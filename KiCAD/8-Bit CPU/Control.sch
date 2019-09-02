@@ -4,7 +4,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 18 30
+Sheet 18 29
 Title ""
 Date ""
 Rev ""
@@ -40,52 +40,17 @@ Text Label 5250 3800 0    50   ~ 0
 A11
 Text Label 5250 3900 0    50   ~ 0
 A12
-Text Label 3500 5000 0    50   ~ 0
-~FLAG
 $Sheet
 S 2800 4100 600  400 
 U 5D4EE537
-F0 "Step Timer" 50
-F1 "Step Timer.sch" 50
+F0 "Step Counter" 50
+F1 "Control_StepCnt.sch" 50
 F2 "~CLK" I L 2800 4200 50 
 F3 "S0" O R 3400 4200 50 
 F4 "S1" O R 3400 4300 50 
 F5 "S2" O R 3400 4400 50 
 F6 "MSR" I L 2800 4400 50 
 F7 "~RESET" I L 2800 4300 50 
-$EndSheet
-$Sheet
-S 4600 2600 600  1600
-U 5D50DAD7
-F0 "Address Buffer" 50
-F1 "AddrBuff.sch" 50
-F2 "A0" I L 4600 2700 50 
-F3 "A1" I L 4600 2800 50 
-F4 "A2" I L 4600 2900 50 
-F5 "A3" I L 4600 3000 50 
-F6 "A4" I L 4600 3100 50 
-F7 "A5" I L 4600 3200 50 
-F8 "A6" I L 4600 3300 50 
-F9 "A7" I L 4600 3400 50 
-F10 "B0" O R 5200 2700 50 
-F11 "B1" O R 5200 2800 50 
-F12 "B2" O R 5200 2900 50 
-F13 "B3" O R 5200 3000 50 
-F14 "B4" O R 5200 3100 50 
-F15 "B5" O R 5200 3200 50 
-F16 "B6" O R 5200 3300 50 
-F17 "B7" O R 5200 3400 50 
-F18 "A8" I L 4600 3500 50 
-F19 "A9" I L 4600 3600 50 
-F20 "A10" I L 4600 3700 50 
-F21 "A11" I L 4600 3800 50 
-F22 "A12" I L 4600 3900 50 
-F23 "B8" O R 5200 3500 50 
-F24 "B9" O R 5200 3600 50 
-F25 "B10" O R 5200 3700 50 
-F26 "B11" O R 5200 3800 50 
-F27 "B12" O R 5200 3900 50 
-F28 "~OE" I L 4600 4100 50 
 $EndSheet
 Wire Wire Line
 	5200 2700 6000 2700
@@ -136,22 +101,6 @@ I1
 Text Label 3450 2700 0    50   ~ 0
 I0
 Wire Wire Line
-	3400 2700 3700 2700
-Wire Wire Line
-	3400 2800 3800 2800
-Wire Wire Line
-	3400 2900 3900 2900
-Wire Wire Line
-	3400 3000 4000 3000
-Wire Wire Line
-	3400 3100 4100 3100
-Wire Wire Line
-	3400 3200 4200 3200
-Wire Wire Line
-	3400 3300 4300 3300
-Wire Wire Line
-	3400 3400 4400 3400
-Wire Wire Line
 	3400 4200 3600 4200
 Wire Wire Line
 	3600 4200 3600 3500
@@ -181,7 +130,7 @@ $Sheet
 S 2800 2600 600  1200
 U 5D506496
 F0 "Instr Reg" 50
-F1 "IR.sch" 50
+F1 "Control_InstReg.sch" 50
 F2 "D0" O R 3400 2700 50 
 F3 "D1" O R 3400 2800 50 
 F4 "D2" O R 3400 2900 50 
@@ -205,7 +154,7 @@ $Sheet
 S 4600 4600 600  2300
 U 5D523C20
 F0 "Programmer" 50
-F1 "Programmer.sch" 50
+F1 "Control_ISP.sch" 50
 F2 "A0" T R 5200 4700 50 
 F3 "A1" T R 5200 4800 50 
 F4 "A2" T R 5200 4900 50 
@@ -270,7 +219,7 @@ $Sheet
 S 6000 2600 600  1900
 U 5D47FE2A
 F0 "EEPROM 1" 50
-F1 "EEPROM.sch" 50
+F1 "Control_EEPROM.sch" 50
 F2 "Q0" O R 6600 2700 50 
 F3 "Q1" O R 6600 2800 50 
 F4 "Q2" O R 6600 2900 50 
@@ -361,7 +310,7 @@ $Sheet
 S 7300 2600 600  1900
 U 5D5A2EAC
 F0 "EEPROM 2" 50
-F1 "EEPROM.sch" 50
+F1 "Control_EEPROM.sch" 50
 F2 "Q0" O R 7900 2700 50 
 F3 "Q1" O R 7900 2800 50 
 F4 "Q2" O R 7900 2900 50 
@@ -452,7 +401,7 @@ $Sheet
 S 8600 2600 600  1900
 U 5D5A6551
 F0 "EEPROM 3" 50
-F1 "EEPROM.sch" 50
+F1 "Control_EEPROM.sch" 50
 F2 "Q0" O R 9200 2700 50 
 F3 "Q1" O R 9200 2800 50 
 F4 "Q2" O R 9200 2900 50 
@@ -703,78 +652,6 @@ Wire Wire Line
 	9200 3300 9400 3300
 Text Label 9400 3300 2    50   ~ 0
 MSR
-Wire Wire Line
-	4000 3900 4000 5000
-$Sheet
-S 4600 1500 600  900 
-U 5D5718A3
-F0 "LEDs" 50
-F1 "LED.sch" 50
-F2 "D2" I L 4600 1800 50 
-F3 "D3" I L 4600 1900 50 
-F4 "D0" I L 4600 1600 50 
-F5 "D1" I L 4600 1700 50 
-F6 "D6" I L 4600 2200 50 
-F7 "D7" I L 4600 2300 50 
-F8 "D4" I L 4600 2000 50 
-F9 "D5" I L 4600 2100 50 
-$EndSheet
-Wire Wire Line
-	4400 3400 4400 2300
-Wire Wire Line
-	4400 2300 4600 2300
-Connection ~ 4400 3400
-Wire Wire Line
-	4400 3400 4600 3400
-Wire Wire Line
-	4600 2200 4300 2200
-Wire Wire Line
-	4300 2200 4300 3300
-Connection ~ 4300 3300
-Wire Wire Line
-	4300 3300 4600 3300
-Wire Wire Line
-	4200 3200 4200 2100
-Wire Wire Line
-	4200 2100 4600 2100
-Connection ~ 4200 3200
-Wire Wire Line
-	4200 3200 4600 3200
-Wire Wire Line
-	4600 2000 4100 2000
-Wire Wire Line
-	4100 2000 4100 3100
-Connection ~ 4100 3100
-Wire Wire Line
-	4100 3100 4600 3100
-Wire Wire Line
-	4000 3000 4000 1900
-Wire Wire Line
-	4000 1900 4600 1900
-Connection ~ 4000 3000
-Wire Wire Line
-	4000 3000 4600 3000
-Wire Wire Line
-	3900 2900 3900 1800
-Wire Wire Line
-	3900 1800 4600 1800
-Connection ~ 3900 2900
-Wire Wire Line
-	3900 2900 4600 2900
-Wire Wire Line
-	3800 2800 3800 1700
-Wire Wire Line
-	3800 1700 4600 1700
-Connection ~ 3800 2800
-Wire Wire Line
-	3800 2800 4600 2800
-Wire Wire Line
-	3700 2700 3700 1600
-Wire Wire Line
-	3700 1600 4600 1600
-Connection ~ 3700 2700
-Wire Wire Line
-	3700 2700 4600 2700
 Text HLabel 2500 3600 0    50   Input ~ 0
 CLK
 Text HLabel 2500 4200 0    50   Input ~ 0
@@ -837,45 +714,12 @@ Wire Wire Line
 	2500 4300 2800 4300
 Text HLabel 2500 4300 0    50   Input ~ 0
 ~RESET
-Text HLabel 2500 5200 0    50   Input ~ 0
-F1
-$Sheet
-S 2800 4900 600  700 
-U 5D62AC00
-F0 "Flags Logic" 50
-F1 "FlagLogic.sch" 50
-F2 "F3" I L 2800 5000 50 
-F3 "F2" I L 2800 5100 50 
-F4 "F1" I L 2800 5200 50 
-F5 "~FLAG" O R 3400 5000 50 
-F6 "A0" I L 2800 5300 50 
-F7 "A1" I L 2800 5400 50 
-F8 "A2" I L 2800 5500 50 
-$EndSheet
-Text HLabel 2500 5100 0    50   Input ~ 0
-F2
-Text HLabel 2500 5000 0    50   Input ~ 0
-F3
-Wire Wire Line
-	2500 5000 2800 5000
-Wire Wire Line
-	2500 5100 2800 5100
-Wire Wire Line
-	2500 5200 2800 5200
-Wire Wire Line
-	2800 5300 2600 5300
-Wire Wire Line
-	2800 5400 2600 5400
-Wire Wire Line
-	2800 5500 2600 5500
-Text Label 2600 5300 0    50   ~ 0
+Text Label 1400 6600 0    50   ~ 0
 A0
-Text Label 2600 5400 0    50   ~ 0
+Text Label 1400 6000 0    50   ~ 0
 A1
-Text Label 2600 5500 0    50   ~ 0
+Text Label 1400 5400 0    50   ~ 0
 A2
-Wire Wire Line
-	3400 5000 4000 5000
 Text HLabel 6800 2700 2    50   Output ~ 0
 ~SPI
 Text HLabel 6800 2800 2    50   Output ~ 0
@@ -1080,4 +924,237 @@ F 3 "" H 4250 5350 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	4250 5350 4250 5250
+Text HLabel 1350 5200 0    50   Input ~ 0
+F3
+Text HLabel 1400 5800 0    50   Input ~ 0
+F2
+Text HLabel 1400 6400 0    50   Input ~ 0
+F1
+Wire Wire Line
+	3100 5400 3200 5400
+$Comp
+L 74xx:74LS32 U?
+U 4 1 5D78D764
+P 2800 5400
+AR Path="/5D4EE537/5D78D764" Ref="U?"  Part="1" 
+AR Path="/5D78D764" Ref="U?"  Part="2" 
+AR Path="/5D6D875D/5D78D764" Ref="U30"  Part="4" 
+AR Path="/5D6D875D/5D62AC00/5D78D764" Ref="U?"  Part="4" 
+F 0 "U30" H 2800 5725 50  0000 C CNN
+F 1 "74HC32" H 2800 5634 50  0000 C CNN
+F 2 "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm" H 2800 5400 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS32" H 2800 5400 50  0001 C CNN
+	4    2800 5400
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74xx:74LS32 U?
+U 3 1 5D78D76A
+P 3500 5500
+AR Path="/5D4EE537/5D78D76A" Ref="U?"  Part="1" 
+AR Path="/5D78D76A" Ref="U?"  Part="1" 
+AR Path="/5D6D875D/5D78D76A" Ref="U30"  Part="3" 
+AR Path="/5D6D875D/5D62AC00/5D78D76A" Ref="U?"  Part="3" 
+F 0 "U30" H 3500 5825 50  0000 C CNN
+F 1 "74HC32" H 3500 5734 50  0000 C CNN
+F 2 "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm" H 3500 5500 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74LS32" H 3500 5500 50  0001 C CNN
+	3    3500 5500
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74xx:74HC00 U?
+U 2 1 5D78D770
+P 1800 5300
+AR Path="/5D6D875D/5D4EE537/5D78D770" Ref="U?"  Part="1" 
+AR Path="/5D6D875D/5D62AC00/5D78D770" Ref="U?"  Part="2" 
+AR Path="/5D6D875D/5D78D770" Ref="U28"  Part="2" 
+F 0 "U28" H 1800 5625 50  0000 C CNN
+F 1 "74HC00" H 1800 5534 50  0000 C CNN
+F 2 "jcf:SOIC-14_3.9x8.7mm_P1.27mm_JCF" H 1800 5300 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74hc00" H 1800 5300 50  0001 C CNN
+	2    1800 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74xx:74HC00 U?
+U 3 1 5D78D776
+P 1800 5900
+AR Path="/5D6D875D/5D4EE537/5D78D776" Ref="U?"  Part="1" 
+AR Path="/5D6D875D/5D62AC00/5D78D776" Ref="U?"  Part="3" 
+AR Path="/5D6D875D/5D78D776" Ref="U28"  Part="3" 
+F 0 "U28" H 1800 6225 50  0000 C CNN
+F 1 "74HC00" H 1800 6134 50  0000 C CNN
+F 2 "jcf:SOIC-14_3.9x8.7mm_P1.27mm_JCF" H 1800 5900 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74hc00" H 1800 5900 50  0001 C CNN
+	3    1800 5900
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74xx:74HC00 U?
+U 4 1 5D78D77C
+P 1800 6500
+AR Path="/5D6D875D/5D4EE537/5D78D77C" Ref="U?"  Part="1" 
+AR Path="/5D6D875D/5D62AC00/5D78D77C" Ref="U?"  Part="4" 
+AR Path="/5D6D875D/5D78D77C" Ref="U28"  Part="4" 
+F 0 "U28" H 1800 6825 50  0000 C CNN
+F 1 "74HC00" H 1800 6734 50  0000 C CNN
+F 2 "jcf:SOIC-14_3.9x8.7mm_P1.27mm_JCF" H 1800 6500 50  0001 C CNN
+F 3 "http://www.ti.com/lit/gpn/sn74hc00" H 1800 6500 50  0001 C CNN
+	4    1800 6500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1350 5200 1500 5200
+Wire Wire Line
+	1400 5800 1500 5800
+Wire Wire Line
+	1400 6400 1500 6400
+Wire Wire Line
+	2500 5300 2100 5300
+Wire Wire Line
+	2100 5900 2300 5900
+Wire Wire Line
+	2300 5900 2300 5500
+Wire Wire Line
+	2300 5500 2500 5500
+Wire Wire Line
+	2100 6500 3000 6500
+Wire Wire Line
+	3000 6500 3000 5600
+Wire Wire Line
+	3000 5600 3200 5600
+Wire Wire Line
+	3800 5500 4000 5500
+Wire Wire Line
+	1400 5400 1500 5400
+Wire Wire Line
+	1400 6000 1500 6000
+Wire Wire Line
+	1400 6600 1500 6600
+Wire Wire Line
+	4000 3900 4000 5500
+Text Notes 1000 7000 0    100  ~ 0
+These Gates should be HC08 AND\nHC00 NAND is an error.
+Text Notes 5450 5150 0    100  ~ 0
+~OE~ should be 2 signals\nEEPROM ~OE~ and\nBUFFER ~OE
+Wire Wire Line
+	3700 1600 4600 1600
+Wire Wire Line
+	3700 2700 4600 2700
+Wire Wire Line
+	3400 2700 3700 2700
+Connection ~ 3700 2700
+Wire Wire Line
+	3700 2700 3700 1600
+Wire Wire Line
+	3800 1700 4600 1700
+Wire Wire Line
+	3800 2800 4600 2800
+Wire Wire Line
+	3400 2800 3800 2800
+Connection ~ 3800 2800
+Wire Wire Line
+	3800 2800 3800 1700
+Wire Wire Line
+	3900 1800 4600 1800
+Wire Wire Line
+	3900 2900 4600 2900
+Wire Wire Line
+	3400 2900 3900 2900
+Connection ~ 3900 2900
+Wire Wire Line
+	3900 2900 3900 1800
+Wire Wire Line
+	4000 1900 4600 1900
+Wire Wire Line
+	4000 3000 4600 3000
+Wire Wire Line
+	3400 3000 4000 3000
+Connection ~ 4000 3000
+Wire Wire Line
+	4000 3000 4000 1900
+Wire Wire Line
+	4100 3100 4600 3100
+Wire Wire Line
+	3400 3100 4100 3100
+Connection ~ 4100 3100
+Wire Wire Line
+	4100 2000 4100 3100
+Wire Wire Line
+	4600 2000 4100 2000
+Wire Wire Line
+	4200 2100 4600 2100
+Wire Wire Line
+	4200 3200 4600 3200
+Wire Wire Line
+	3400 3200 4200 3200
+Connection ~ 4200 3200
+Wire Wire Line
+	4200 3200 4200 2100
+Wire Wire Line
+	4300 3300 4600 3300
+Wire Wire Line
+	3400 3300 4300 3300
+Connection ~ 4300 3300
+Wire Wire Line
+	4300 2200 4300 3300
+Wire Wire Line
+	4600 2200 4300 2200
+Wire Wire Line
+	4400 2300 4600 2300
+Wire Wire Line
+	4400 3400 4600 3400
+Wire Wire Line
+	3400 3400 4400 3400
+Connection ~ 4400 3400
+Wire Wire Line
+	4400 3400 4400 2300
+$Sheet
+S 4600 1500 600  900 
+U 5D5718A3
+F0 "LEDs" 50
+F1 "LED.sch" 50
+F2 "D2" I L 4600 1800 50 
+F3 "D3" I L 4600 1900 50 
+F4 "D0" I L 4600 1600 50 
+F5 "D1" I L 4600 1700 50 
+F6 "D6" I L 4600 2200 50 
+F7 "D7" I L 4600 2300 50 
+F8 "D4" I L 4600 2000 50 
+F9 "D5" I L 4600 2100 50 
+$EndSheet
+$Sheet
+S 4600 2600 600  1600
+U 5D50DAD7
+F0 "Address Buffer" 50
+F1 "Control_AddrBuff.sch" 50
+F2 "A0" I L 4600 2700 50 
+F3 "A1" I L 4600 2800 50 
+F4 "A2" I L 4600 2900 50 
+F5 "A3" I L 4600 3000 50 
+F6 "A4" I L 4600 3100 50 
+F7 "A5" I L 4600 3200 50 
+F8 "A6" I L 4600 3300 50 
+F9 "A7" I L 4600 3400 50 
+F10 "B0" O R 5200 2700 50 
+F11 "B1" O R 5200 2800 50 
+F12 "B2" O R 5200 2900 50 
+F13 "B3" O R 5200 3000 50 
+F14 "B4" O R 5200 3100 50 
+F15 "B5" O R 5200 3200 50 
+F16 "B6" O R 5200 3300 50 
+F17 "B7" O R 5200 3400 50 
+F18 "A8" I L 4600 3500 50 
+F19 "A9" I L 4600 3600 50 
+F20 "A10" I L 4600 3700 50 
+F21 "A11" I L 4600 3800 50 
+F22 "A12" I L 4600 3900 50 
+F23 "B8" O R 5200 3500 50 
+F24 "B9" O R 5200 3600 50 
+F25 "B10" O R 5200 3700 50 
+F26 "B11" O R 5200 3800 50 
+F27 "B12" O R 5200 3900 50 
+F28 "~OE" I L 4600 4100 50 
+$EndSheet
 $EndSCHEMATC

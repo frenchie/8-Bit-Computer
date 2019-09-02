@@ -4,7 +4,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 19 30
+Sheet 19 29
 Title ""
 Date ""
 Rev ""
@@ -599,4 +599,8 @@ Wire Wire Line
 	5000 5800 5300 5800
 Text HLabel 5000 5800 0    50   Input ~ 0
 MSR
+Text Notes 2300 6550 0    100  ~ 0
+This is a goof!\n\nThis was only going to work for an active high signal.\nThis is of course an active low signal
+Text Notes 7950 4200 0    100  ~ 0
+Resistor Network
 $EndSCHEMATC

@@ -4,7 +4,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 29 30
+Sheet 29 29
 Title ""
 Date ""
 Rev ""
@@ -501,7 +501,7 @@ $Sheet
 S 5150 1150 600  300 
 U 5D6FC11A
 F0 "AVR Clock" 50
-F1 "AVR_Clock.sch" 50
+F1 "Clock_AVR.sch" 50
 F2 "~HLT" I L 5150 1350 50 
 F3 "EN" I L 5150 1250 50 
 F4 "CLK" O R 5750 1250 50 

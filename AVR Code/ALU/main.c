@@ -72,11 +72,11 @@ uint8_t ALU(uint8_t a, uint8_t b, uint8_t control) {
             break;
 
         case 12: // left shift
-            ret = a << b;
+            ret = a << 1;
             break;
 
         case 13: // right shift
-            ret = a >> b;
+            ret = a >> 1;
             break;
 
         case 14:

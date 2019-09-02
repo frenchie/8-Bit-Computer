@@ -43,23 +43,29 @@ int main(void) {
 
     while (1) {
         sleep_disable();
-        cli();
 
         if ((PINB & 3) != 3) {
-            PCMSK |= (1 << PCINT0) | (1 << PCINT1);	// PCINT enable
-            TCCR0B &= ~(1<<CS01);					// Timer Stop
-            TCNT0 = 0;								// COUNT = 0
-            PORTB &= ~(1<<PB4);						// Clock Output low
+            cli();                              // Interrupts off
+
+            TCCR0B &= ~(1<<CS01);                // Timer Stop
+            TCNT0 = 0;                           // COUNT = 0
+            PORTB &= ~(1<<PB4);                  // Clock Output low
             trigg = 0;
+
+            PCMSK |= (1<<PCINT0)|(1<<PCINT1);    // PCINT enable
+
             sei();
             sleep_enable();
-            sleep_cpu();							// Wont wake until PCINT
+            sleep_cpu();                         // PCINT to wake
+            sleep_disable();
+
+            cli();
+            PCMSK &= ~((1<<PCINT0)|(1<<PCINT1)); // Disable PCINT
+            TCCR0B |= (1 << CS01);               // Timer Start /8
+            sei();
+
             continue;
         }
-
-        PCMSK &= ~((1 << PCINT0) | (1 << PCINT1));	// Disable PCINT
-        TCCR0B |= (1 << CS01);						// Timer Start /8
-        sei();
 
         // Read the Pot, this could be made to sleep but it plays with timing
         ADCSRA |= (1 << ADSC);
@@ -70,13 +76,11 @@ int main(void) {
             PORTB ^= (1<<PB4);
             trigg = 0;
         }
-        sleep_enable();
         sleep_cpu();
     }
     return 0; // never reached
 }
 
-// Don't actually need this to do anything, it just wakes the chip up
 ISR(TIMER0_COMPA_vect) {
     count++;
     if (count >= counts[mxcnt]) {
@@ -85,4 +89,5 @@ ISR(TIMER0_COMPA_vect) {
     }
 }
 
+// Don't actually need this to do anything, it just wakes the chip up
 EMPTY_INTERRUPT(PCINT0_vect);

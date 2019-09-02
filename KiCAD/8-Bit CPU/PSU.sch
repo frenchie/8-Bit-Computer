@@ -4,7 +4,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 28 30
+Sheet 28 29
 Title ""
 Date ""
 Rev ""
@@ -216,4 +216,6 @@ Wire Wire Line
 	4750 3400 4750 3500
 Wire Wire Line
 	6400 3500 7000 3500
+Text Notes 3500 3000 0    100  ~ 0
+J5 Footprint has pins 1 & 3 swapped (PCB)
 $EndSCHEMATC

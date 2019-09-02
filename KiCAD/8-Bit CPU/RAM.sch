@@ -4,7 +4,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 4 30
+Sheet 4 29
 Title ""
 Date ""
 Rev ""
@@ -222,7 +222,7 @@ $Sheet
 S 3200 2500 600  1200
 U 5D5738D6
 F0 "AddrReg" 50
-F1 "MAR.sch" 50
+F1 "RAM_MAR.sch" 50
 F2 "M0" O R 3800 2600 50 
 F3 "M2" O R 3800 2800 50 
 F4 "M7" O R 3800 3300 50 
@@ -453,7 +453,7 @@ $Sheet
 S 8300 1400 600  2300
 U 5D450B31
 F0 "Data IO" 50
-F1 "RAM DataIO.sch" 50
+F1 "RAM_DataIO.sch" 50
 F2 "RAM0" B L 8300 2900 50 
 F3 "RAM1" B L 8300 3000 50 
 F4 "RAM2" B L 8300 3100 50 
@@ -477,7 +477,7 @@ $Sheet
 S 3200 5100 600  750 
 U 5D4645A0
 F0 "Control" 50
-F1 "RAM Logic.sch" 50
+F1 "RAM_Logic.sch" 50
 F2 "~RI" I L 3200 5200 50 
 F3 "MAN" O R 3800 5300 50 
 F4 "CLK" I L 3200 5750 50 

@@ -3,86 +3,86 @@
 #include <string.h>
 
 // EEPROM 1
-#define	SPI		(1<<0)
-#define	SPO		(1<<1)
-#define CO		(1<<2)
-#define CI		(1<<3)
-#define AL0		(1<<4)
-#define AL1		(1<<5)
-#define AL2		(1<<6)
-#define AL3		(1<<7)
+#define	SPI     (1<<0)
+#define	SPO     (1<<1)
+#define CO      (1<<2)
+#define CI      (1<<3)
+#define AL0     (1<<4)
+#define AL1     (1<<5)
+#define AL2     (1<<6)
+#define AL3     (1<<7)
 
 // EEPROM 2
-#define ALI		(1<<10)
-#define ALO		(1<<8)
-#define RI		(1<<9)
-#define RO		(1<<11)
-#define MD		(1<<12)
-#define MI		(1<<13)
-#define BO		(1<<14)
-#define BI		(1<<15)
+#define ALI     (1<<10)
+#define ALO     (1<<8)
+#define RI      (1<<9)
+#define RO      (1<<11)
+#define MD      (1<<12)
+#define MI      (1<<13)
+#define BO      (1<<14)
+#define BI      (1<<15)
 
 //EEPROM 3
-#define	AO		(1<<16)
-#define	AI		(1<<17)
-#define HLT		(1<<18)
-#define PE		(1<<19)
-#define PO		(1<<20)
-#define PI		(1<<21)
-#define MSR		(1<<22)
-#define II		(1<<23)
+#define	AO      (1<<16)
+#define	AI      (1<<17)
+#define HLT     (1<<18)
+#define PE      (1<<19)
+#define PO      (1<<20)
+#define PI      (1<<21)
+#define MSR     (1<<22)
+#define II      (1<<23)
 
 // Inverted Signals
 #define INVERT	(PI|PO|HLT|AI|AO|BI|BO|CI|CO|MI|RO|RI|ALO|ALI|SPO|SPI|MSR|II|MD)
 
 // ALU
-#define ALC(CMD) ((uint32_t)CMD << 4)
+#define ALC(CMD)    ((uint32_t)CMD << 4)
 
 // We've moved this to 0b1111 to remove the output register.
-#define ALU_LAST  0b0000
+#define ALU_LAST    0b0000
 
 // 74LS382 Compatibility
-#define B_MINUS_A 0b0001
-#define A_MINUS_B 0b0010
-#define A_PLUS_B  0b0011
-#define A_XOR_B   0b0100
-#define A_OR_B    0b0101
-#define A_AND_B   0b0110
-#define ALU_ALL   0b0111
+#define B_MINUS_A   0b0001
+#define A_MINUS_B   0b0010
+#define A_PLUS_B    0b0011
+#define A_XOR_B     0b0100
+#define A_OR_B      0b0101
+#define A_AND_B     0b0110
+#define ALU_ALL     0b0111
 
 // Additional functionality
-#define INC_A     0b1000
-#define DEC_A     0b1001
-#define NOT_A     0b1010
-#define NOT_B     0b1011
-#define SHIFT_L   0b1100
-#define SHIFT_R   0b1101
-#define B_OUT	  0b1110
-#define CLEAR	  0b1111
+#define INC_A       0b1000
+#define DEC_A       0b1001
+#define NOT_A       0b1010
+#define NOT_B       0b1011
+#define SHIFT_L     0b1100
+#define SHIFT_R     0b1101
+#define B_OUT	    0b1110
+#define CLEAR	    0b1111
 
 // Flags Addresses
-#define CARRY_ADDR (1 << 11)
-#define FLAGS_ADDR (1 << 12)
+#define CARRY_ADDR  (1 << 11)
+#define FLAGS_ADDR  (1 << 12)
 
-#define FLAGS_F0C0 0
-#define FLAGS_F0C1 1
-#define FLAGS_F1C0 2
-#define FLAGS_F1C1 3
+#define FLAGS_F0C0  0
+#define FLAGS_F0C1  1
+#define FLAGS_F1C0  2
+#define FLAGS_F1C1  3
 
 // Main Op Codes
-#define MOV		0b00
-#define LOD		0b01
-#define STO		0b10
-#define ALU		0b11
+#define MOV		    0b00
+#define LOD		    0b01
+#define STO		    0b10
+#define ALU		    0b11
 
 // Registers
-#define	Ra		0b000
-#define Rb		0b001
-#define Rc		0b010
-#define SP		0b100
-#define PC		0b101
-#define SPi		0b110
-#define IMM		0b111
+#define	Ra		    0b000
+#define Rb		    0b001
+#define Rc		    0b010
+#define SP		    0b100
+#define PC	    	0b101
+#define SPi		    0b110
+#define IMM	    	0b111
 
 #define OPCODE(op,dreg,sreg) (((op)<<6)|((dreg)<<3)|(sreg))
 #define ALU_OPCODE(alc,sreg) ((ALU<<6)|((alc)<<2)|(sreg))
@@ -161,7 +161,8 @@ void write_MOV() {
     opcode = OPCODE(MOV, Ra, Ra);
 
     // HLT - HALT is currently broken as the step counter can't be manually
-    // reset on Rev A. HLT is really Halt and Catch Fire.
+    // reset on Rev A. HLT is really Halt and Catch Fire as the only way out
+    // is a power cycle
     /*
     opcode = OPCODE(MOV, PC, PC);
     UC_Template[opcode][2] = HLT;
@@ -278,14 +279,18 @@ int main(void) {
     ucode[FLAGS_F1C1][opcode][2] = PO | MI | PE;
     ucode[FLAGS_F1C1][opcode][3] = RO | PI;
 
+    char buffer[10];
+
     // Flags
     for (uint8_t flag = 0; flag <= 2; flag++) {
-    opcode = OPCODE(MOV, IMM, (1<<flag));
-    ucode[FLAGS_F1C0][opcode][2] = PO | MI | PE;
-    ucode[FLAGS_F1C0][opcode][3] = RO | PI;
+        opcode = OPCODE(MOV, IMM, (1<<flag));
 
-    ucode[FLAGS_F1C1][opcode][2] = PO | MI | PE;
-    ucode[FLAGS_F1C1][opcode][3] = RO | PI;
+        printf("%d",opcode);
+        ucode[FLAGS_F1C0][opcode][2] = PO | MI | PE;
+        ucode[FLAGS_F1C0][opcode][3] = RO | PI;
+
+        ucode[FLAGS_F1C1][opcode][2] = PO | MI | PE;
+        ucode[FLAGS_F1C1][opcode][3] = RO | PI;
     }
 
     // flip bits
