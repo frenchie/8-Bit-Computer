@@ -1,0 +1,1 @@
+This code works on a variety of 8-pin ATtiny devices. You can use an ATtiny25, 45, 85 or an ATtiny13. Make sure you modify the Makefile to match the device you are using.
