@@ -5,9 +5,9 @@ EELAYER END
 $Descr A4 8268 11693 portrait
 encoding utf-8
 Sheet 1 29
-Title ""
+Title "8 Bit Computer"
 Date ""
-Rev ""
+Rev "C"
 Comp ""
 Comment1 ""
 Comment2 ""
@@ -405,11 +405,11 @@ Wire Wire Line
 Wire Wire Line
 	2200 4800 2200 7300
 Text Label 6150 6400 2    50   ~ 0
-FL3
+OVF
 Text Label 6150 6300 2    50   ~ 0
-FL2
+NEG
 Text Label 6150 6200 2    50   ~ 0
-FL1
+ZER
 Text Label 6150 6100 2    50   ~ 0
 CRY
 Wire Wire Line
@@ -546,11 +546,11 @@ Wire Wire Line
 Wire Wire Line
 	2600 6800 2400 6800
 Text Label 2400 5700 0    50   ~ 0
-FL3
+OVF
 Text Label 2400 5600 0    50   ~ 0
-FL2
+NEG
 Text Label 2400 5500 0    50   ~ 0
-FL1
+ZER
 Wire Wire Line
 	2600 5700 2400 5700
 Wire Wire Line
