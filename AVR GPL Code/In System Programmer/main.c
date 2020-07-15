@@ -30,22 +30,9 @@
 
 #define AT24C256	160
 
-#define AUTOLOADER  1
-#define ADDR_IO_EX1 0x20<<1
-#define ADDR_IO_EX2 0x21<<1
-
 uint8_t data;
 
-#ifdef AUTOLOADER
-unsigned char bitswap( unsigned char x )
-{
-    x = ((x >> 1) & 0x55) | ((x << 1) & 0xaa);
-    x = ((x >> 2) & 0x33) | ((x << 2) & 0xcc);
-    x = ((x >> 4) & 0x0f) | ((x << 4) & 0xf0);
-    return x;
-}
-#endif
-
+// sleeps 10ms
 void sl(uint16_t us) {
     us--;
     cli();
@@ -205,19 +192,8 @@ int main(void) {
     DDRC = ((1 << _EE)|(1 << _AE)|(1 << RW))|(1 << _CS)|(1 << _BS)|(1 << _AS);
 
 	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
-
-    i2c_start_wait(ADDR_IO_EX2+I2C_WRITE);
-    i2c_write(3);
-    i2c_write(0);
-    i2c_write(0);
-    i2c_write(0);
-    i2c_write(255);
-    i2c_write(~2);
-    i2c_stop();
-
 	sleep_enable();
 	sleep_cpu();
-
 
 	return 0; // never reached
 }
