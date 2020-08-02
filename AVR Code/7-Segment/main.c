@@ -32,7 +32,7 @@ SOFTWARE.
 #define OVERFLOW_COUNT 999
 
 uint8_t digits[16] = {	0x7E, 0x12, 0x5D, 0x57, 0x33, 0x67, 0x6F, 0x52,
-						0x7F, 0x77, 0x7B, 0x2F, 0x6C, 0x1F, 0x6D, 0x69 };
+		0x7F, 0x77, 0x7B, 0x2F, 0x6C, 0x1F, 0x6D, 0x69 };
 
 uint8_t binary[4] = { 0x00, 0x12, 0x28, 0x3A };
 
@@ -40,13 +40,13 @@ uint8_t binary[4] = { 0x00, 0x12, 0x28, 0x3A };
 // Probably not as fast, but a bit lighter weight than math.h
 uint8_t myPow(uint8_t x,uint8_t n)
 {
-    uint8_t i; /* Variable used in loop counter */
-    uint8_t number = 1;
+	uint8_t i; /* Variable used in loop counter */
+	uint8_t number = 1;
 
-    for (i = 0; i < n; ++i)
-        number *= x;
+	for (i = 0; i < n; ++i)
+		number *= x;
 
-    return(number);
+	return(number);
 }
 
 uint8_t display(uint8_t value, uint8_t digit, uint8_t control) {
@@ -96,21 +96,21 @@ int main(void) {
 	uint8_t control = 0;
 
 	// PC2-5 & PORTD are outputs
-    DDRC = 15 << 2;
+	DDRC = 15 << 2;
 	PORTC |= 63;
 
-    DDRD = 255;
+	DDRD = 255;
 
 	// Enable the pullup resistors on PORTC0-1
 	PORTC |= 3;
 
-    // Timer setup - Not started here.
-    TCCR1A = 0;
-    TCCR1B |= (1 << WGM12); // clear timer on compare
-    TCCR1C = 0;
-    // Enable the output compare interrupt.
-    TIMSK1 |= (1 << OCIE1A);
-    OCR1A = OVERFLOW_COUNT;
+	// Timer setup - Not started here.
+	TCCR1A = 0;
+	TCCR1B |= (1 << WGM12); // clear timer on compare
+	TCCR1C = 0;
+	// Enable the output compare interrupt.
+	TIMSK1 |= (1 << OCIE1A);
+	OCR1A = OVERFLOW_COUNT;
 	// Enable Interrupts
 	sei();
 
@@ -137,7 +137,7 @@ int main(void) {
 		digit++;
 		if (digit == 4) { digit = 0; }
 		sleep_cpu();
-    }
+	}
 	return 0; // never reached
 }
 

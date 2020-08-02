@@ -56,116 +56,116 @@ volatile uint8_t manual;
 uint16_t maxcnt;
 
 void stopTimer(void) {
-    PORTB &= ~CLKOUT;    	// Clock output low
-    TCCR0B &= ~TPSC;
-    TCNT0;
-    count = 0;
-    trigger = 0;
+	PORTB &= ~CLKOUT;    	// Clock output low
+	TCCR0B &= ~TPSC;
+	TCNT0;
+	count = 0;
+	trigger = 0;
 }
 
 void startTimer(void) {
-    PCMSK = 0;
-    TCCR0B |= TPSC;
+	PCMSK = 0;
+	TCCR0B |= TPSC;
 }
 
 void halt(void) {
-    cli();
-    stopTimer();
-    PCMSK = RUNINT|AUTOINT;
-    sei();
+	cli();
+	stopTimer();
+	PCMSK = RUNINT|AUTOINT;
+	sei();
 
-    sleep_enable();
-    while(!(PINB & RUN)) sleep_cpu();
-    sleep_disable();
+	sleep_enable();
+	while(!(PINB & RUN)) sleep_cpu();
+	sleep_disable();
 
-    cli();
-    startTimer();
-    sei();
+	cli();
+	startTimer();
+	sei();
 }
 
 void manclk(void) {
-    cli();
-    stopTimer();
-    PCMSK = CLKINT|RUNINT|AUTOINT;
-    sei();
+	cli();
+	stopTimer();
+	PCMSK = CLKINT|RUNINT|AUTOINT;
+	sei();
 
-    while(!(PINB & AUTO)) {
-        if(PINB & RUN) {
-            if(PINB & MANCLK) {
-                PORTB |= CLKOUT;
-            } else {
-                PORTB &= ~CLKOUT;
-            }
-        }
-        sleep_enable();
-        sleep_cpu();
-        sleep_disable();
-    }
+	while(!(PINB & AUTO)) {
+		if(PINB & RUN) {
+			if(PINB & MANCLK) {
+				PORTB |= CLKOUT;
+			} else {
+				PORTB &= ~CLKOUT;
+			}
+		}
+		sleep_enable();
+		sleep_cpu();
+		sleep_disable();
+	}
 
-    cli();
-    startTimer();
-    sei();
+	cli();
+	startTimer();
+	sei();
 }
 
 
 int main(void) {
-    DDRB = CLKOUT;
-    PORTB &= ~CLKOUT;
+	DDRB = CLKOUT;
+	PORTB &= ~CLKOUT;
 
-    cli();
-    TCCR0A = 0;
-    TCCR0B = 0;
-    TCNT0 = 0;
-    TCCR0A |= (1 << WGM01);
-    OCR0A = COUNT;          // Interrupts every 100us when Timer running
-    TCCR0B |= (1 << CS01);  // Timer Start /8 prescaler
-    TIMSK |= (1 << OCIE0A);
-    GIMSK |= (1 << PCIE);
-    sei();
+	cli();
+	TCCR0A = 0;
+	TCCR0B = 0;
+	TCNT0 = 0;
+	TCCR0A |= (1 << WGM01);
+	OCR0A = COUNT;          // Interrupts every 100us when Timer running
+	TCCR0B |= (1 << CS01);  // Timer Start /8 prescaler
+	TIMSK |= (1 << OCIE0A);
+	GIMSK |= (1 << PCIE);
+	sei();
 
-    // Setup the ADC
-    ADMUX |= (1 << MUX1); // Only using ADC2
-    ADCSRA |= (1 << ADEN);
-    ADCSRA |= (1 << ADPS2) | (1 << ADPS1); // 125 kHz ADC clock
+	// Setup the ADC
+	ADMUX |= (1 << MUX1); // Only using ADC2
+	ADCSRA |= (1 << ADEN);
+	ADCSRA |= (1 << ADPS2) | (1 << ADPS1); // 125 kHz ADC clock
 
-    //Enable Sleeping
-    set_sleep_mode(SLEEP_MODE_IDLE);
+	//Enable Sleeping
+	set_sleep_mode(SLEEP_MODE_IDLE);
 
-    while (1) {
+	while (1) {
 
-        if (!(PINB & RUN)) {
-            halt();
-            continue;
-        }
+		if (!(PINB & RUN)) {
+			halt();
+			continue;
+		}
 
-        if (!(PINB & AUTO)) {
-            manclk();
-            continue;
-        }
+		if (!(PINB & AUTO)) {
+			manclk();
+			continue;
+		}
 
-        ADCSRA |= (1 << ADSC);
-        while (ADCSRA & (1 << ADSC));
-        maxcnt = 5000 / (64 - ADC/16);
+		ADCSRA |= (1 << ADSC);
+		while (ADCSRA & (1 << ADSC));
+		maxcnt = 5000 / (64 - ADC/16);
 
-        if (trigger) {
-            PORTB ^= CLKOUT;
-            trigger = 0;
-        }
+		if (trigger) {
+			PORTB ^= CLKOUT;
+			trigger = 0;
+		}
 
-        sleep_enable();
-        sleep_cpu();
-        sleep_disable();
-    }
+		sleep_enable();
+		sleep_cpu();
+		sleep_disable();
+	}
 
-    return 0; // never reached
+	return 0; // never reached
 }
 
 ISR(TIMER0_COMPA_vect) {
-    count++;
-    if (count >= maxcnt) {
-        count = 0;
-        trigger = 1;
-    }
+	count++;
+	if (count >= maxcnt) {
+		count = 0;
+		trigger = 1;
+	}
 }
 
 EMPTY_INTERRUPT(PCINT0_vect);

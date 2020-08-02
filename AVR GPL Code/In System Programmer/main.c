@@ -34,8 +34,8 @@ uint8_t data;
 
 // sleeps 10ms
 void sl(uint16_t us) {
-    us--;
-    cli();
+	us--;
+	cli();
 	TCNT1 = 0;
 	OCR1A = us;
 
@@ -45,7 +45,7 @@ void sl(uint16_t us) {
 
 	sleep_enable();
 	sleep_cpu();
-    sleep_disable();
+	sleep_disable();
 
 	cli();
 
@@ -53,49 +53,49 @@ void sl(uint16_t us) {
 }
 
 void write(uint16_t addr, uint8_t data) {
-    // Set Buffers to Write
+	// Set Buffers to Write
 	PORTC |= (1 << RW);
 
-    // EEPROM addressing
+	// EEPROM addressing
 	PORTD = addr & 255;
 	PORTB = (addr >> 8);
 
-    // Port A becomes an output
-    DDRA = 0xff;
+	// Port A becomes an output
+	DDRA = 0xff;
 	PORTA = data;
 
-    // Pulse the write pin, sleep for 10ms
+	// Pulse the write pin, sleep for 10ms
 	PORTB |= (1 << PB5);
 	PORTB ^= (1 << PB5);
 	sl(10000);
 
-    // Port A back to an input
-    DDRA = 0;
-    PORTA = 0;
+	// Port A back to an input
+	DDRA = 0;
+	PORTA = 0;
 
-    // Set Buffers to Read
-    PORTC &= ~(1 << RW);
+	// Set Buffers to Read
+	PORTC &= ~(1 << RW);
 }
 
 uint8_t read(uint16_t addr) {
-    uint8_t out;
+	uint8_t out;
 
-    // Set buffers to read, enable EEPROM output
-    PORTC &= ~((1 << RW)|(1 << _EE));
+	// Set buffers to read, enable EEPROM output
+	PORTC &= ~((1 << RW)|(1 << _EE));
 
-    // EEPROM addressing
+	// EEPROM addressing
 	PORTD = addr & 255;
 	PORTB = (addr >> 8);
 
-    // 500us sleep for the dust to settle (can probably be shorter)
+	// 500us sleep for the dust to settle (can probably be shorter)
 	sl(500);
 
-    // Read the current EEPROM value
-    out = PINA;
+	// Read the current EEPROM value
+	out = PINA;
 
-    // Disable the EEPROM output
-    PORTC |= (1 << _EE);
-    return out;
+	// Disable the EEPROM output
+	PORTC |= (1 << _EE);
+	return out;
 }
 
 // Only required for software write protected EEPROMs
@@ -114,7 +114,7 @@ void unlock(void) {
 void write_eeprom(uint8_t select) {
 	uint16_t i;
 	uint8_t data;
-    uint8_t edata;
+	uint8_t edata;
 
 	PORTC &= ~(1 << select);
 
@@ -122,9 +122,9 @@ void write_eeprom(uint8_t select) {
 	for (i=0; i<8192; i++) {
 
 		data = (i == 8191) ? i2c_readNak() : i2c_readAck();
-        edata = read(i);
+		edata = read(i);
 
-        if (edata != data) { write(i, data); }
+		if (edata != data) { write(i, data); }
 	}
 	i2c_stop();
 
@@ -147,7 +147,7 @@ int main(void) {
 	// We've written this data before and are done.
 	if(!data) {
 		PORTC = (1 << _AS)|(1 << _BS)|(1 << _CS) ;
-        DDRC = ((1 << _EE)|(1 << _AE)|(1 << RW))|(1 << _CS)|(1 << _BS)|(1 << _AS);
+		DDRC = ((1 << _EE)|(1 << _AE)|(1 << RW))|(1 << _CS)|(1 << _BS)|(1 << _AS);
 		set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 		sleep_enable();
 		sleep_cpu();
@@ -159,7 +159,7 @@ int main(void) {
 
 	DDRB |= (1 << PB5);
 
-    // Timer Setup
+	// Timer Setup
 	TCCR1A |= (1<<WGM12); // CTC
 	TCCR1B = 0;
 	TIMSK |= (1 << OCIE1A);
@@ -176,7 +176,7 @@ int main(void) {
 	write_eeprom(_BS);
 	write_eeprom(_CS);
 
-    // Last byte of the EEPROM
+	// Last byte of the EEPROM
 	i2c_start_wait(AT24C256+I2C_WRITE);
 	i2c_write(0x7F);
 	i2c_write(0xFF);
@@ -189,7 +189,7 @@ int main(void) {
 	PORTB = PORTB & ~63;
 
 	PORTC = (1 << _AS)|(1 << _BS)|(1 << _CS) ;
-    DDRC = ((1 << _EE)|(1 << _AE)|(1 << RW))|(1 << _CS)|(1 << _BS)|(1 << _AS);
+	DDRC = ((1 << _EE)|(1 << _AE)|(1 << RW))|(1 << _CS)|(1 << _BS)|(1 << _AS);
 
 	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 	sleep_enable();

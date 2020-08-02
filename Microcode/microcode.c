@@ -115,22 +115,22 @@ SOFTWARE.
 uint32_t UC_Template[256][8];
 
 void populate_template(void) {
-    for (int i = 0; i < 256; i++ ) {
-        // All instructions start with this
-        UC_Template[i][0] = MI|PO;
-        UC_Template[i][1] = RO|II|PE;
+	for (int i = 0; i < 256; i++ ) {
+		// All instructions start with this
+		UC_Template[i][0] = MI|PO;
+		UC_Template[i][1] = RO|II|PE;
 
-        // Default instruction is to HALT
-        UC_Template[i][2] = HLT;
+		// Default instruction is to HALT
+		UC_Template[i][2] = HLT;
 
-        // Unused steps reset the step counter
-        //UC_Template[i][2] = MSR;
-        UC_Template[i][3] = MSR;
-        UC_Template[i][4] = MSR;
-        UC_Template[i][5] = MSR;
-        UC_Template[i][6] = MSR;
-        UC_Template[i][7] = MSR;
-    }
+		// Unused steps reset the step counter
+		//UC_Template[i][2] = MSR;
+		UC_Template[i][3] = MSR;
+		UC_Template[i][4] = MSR;
+		UC_Template[i][5] = MSR;
+		UC_Template[i][6] = MSR;
+		UC_Template[i][7] = MSR;
+	}
 }
 
 // Read/Write Registers
@@ -138,195 +138,195 @@ void populate_template(void) {
 uint32_t O(uint32_t reg) {
 
   switch (reg) {
-    case Ra: return AO;
-    case Rb: return BO;
-    case Rc: return CO;
-    case Rd: return SPO;
-    case SP: return SPO;
-    case PC: return PO;
-    default: return 0;
+	case Ra: return AO;
+	case Rb: return BO;
+	case Rc: return CO;
+	case Rd: return SPO;
+	case SP: return SPO;
+	case PC: return PO;
+	default: return 0;
   }
 }
 
 uint32_t I(uint8_t reg) {
 
   switch (reg) {
-    case Ra: return AI;
-    case Rb: return BI;
-    case Rc: return CI;
-    case Rd: return SPI;
-    case SP: return SPI;
-    case PC: return PI;
-    default: return 0;
+	case Ra: return AI;
+	case Rb: return BI;
+	case Rc: return CI;
+	case Rd: return SPI;
+	case SP: return SPI;
+	case PC: return PI;
+	default: return 0;
   }
 }
 
 uint32_t flip_inverted(uint32_t microcode_word) {
-    microcode_word ^= INVERT;
-    return microcode_word;
+	microcode_word ^= INVERT;
+	return microcode_word;
 }
 
 
 void write_MOV() {
-    uint8_t opcode;
-    for (int dreg = Ra; dreg <= PC; dreg++) {
-        for(int sreg = Ra; sreg <= PC; sreg++) {
-            if(sreg != dreg) {
-                opcode = OPCODE(MOV, dreg, sreg);
-                UC_Template[opcode][2] = O(sreg) | I(dreg) | MSR;
-            }
-        }
+	uint8_t opcode;
+	for (int dreg = Ra; dreg <= PC; dreg++) {
+		for(int sreg = Ra; sreg <= PC; sreg++) {
+			if(sreg != dreg) {
+				opcode = OPCODE(MOV, dreg, sreg);
+				UC_Template[opcode][2] = O(sreg) | I(dreg) | MSR;
+			}
+		}
 
-        // Move Immediate
-        opcode = OPCODE(MOV, dreg, IMM);
-        UC_Template[opcode][2] = PO | MI | PE;
-        UC_Template[opcode][3] = RO | I(dreg) | MSR;
-    }
+		// Move Immediate
+		opcode = OPCODE(MOV, dreg, IMM);
+		UC_Template[opcode][2] = PO | MI | PE;
+		UC_Template[opcode][3] = RO | I(dreg) | MSR;
+	}
 
-    // NOP
-    opcode = OPCODE(MOV, Ra, Ra);
-    UC_Template[opcode][2] = MSR;
+	// NOP
+	opcode = OPCODE(MOV, Ra, Ra);
+	UC_Template[opcode][2] = MSR;
 
-    // HLT  -   This is the actual Halt command. If every other opcode gains
-    //          meaning then this will still be Halt.
-    opcode = OPCODE(MOV, PC, PC);
-    UC_Template[opcode][2] = HLT;
+	// HLT  -   This is the actual Halt command. If every other opcode gains
+	//          meaning then this will still be Halt.
+	opcode = OPCODE(MOV, PC, PC);
+	UC_Template[opcode][2] = HLT;
 }
 
 
 void write_LOD() {
-    uint8_t opcode;
-    for (int dreg = Ra; dreg <= PC; dreg++) {
-        for (int sreg = Ra; sreg <= PC; sreg++) {
-            opcode = OPCODE(LOD, dreg, sreg);
-            UC_Template[opcode][2] = MI | O(sreg);
-            UC_Template[opcode][3] = MD | RO | I(dreg) | MSR;
-        }
+	uint8_t opcode;
+	for (int dreg = Ra; dreg <= PC; dreg++) {
+		for (int sreg = Ra; sreg <= PC; sreg++) {
+			opcode = OPCODE(LOD, dreg, sreg);
+			UC_Template[opcode][2] = MI | O(sreg);
+			UC_Template[opcode][3] = MD | RO | I(dreg) | MSR;
+		}
 
-        // Load Immediate
-        opcode = OPCODE(LOD, dreg, IMM);
-        UC_Template[opcode][2] = PO | MI | PE;
-        UC_Template[opcode][3] = RO | MI;
-        UC_Template[opcode][4] = RO | MD | I(dreg) | MSR;
+		// Load Immediate
+		opcode = OPCODE(LOD, dreg, IMM);
+		UC_Template[opcode][2] = PO | MI | PE;
+		UC_Template[opcode][3] = RO | MI;
+		UC_Template[opcode][4] = RO | MD | I(dreg) | MSR;
 
-        // POP Instructions
-        opcode = OPCODE(LOD, dreg, SPi);
-        UC_Template[opcode][2] = SPO | ALI;
-        UC_Template[opcode][3] = SPI | MI | ALC(DEC_A) | ALO;
-        UC_Template[opcode][4] = MD | RO | I(dreg) | MSR;
-    }
+		// POP Instructions
+		opcode = OPCODE(LOD, dreg, SPi);
+		UC_Template[opcode][2] = SPO | ALI;
+		UC_Template[opcode][3] = SPI | MI | ALC(DEC_A) | ALO;
+		UC_Template[opcode][4] = MD | RO | I(dreg) | MSR;
+	}
 }
 
 void write_STO() {
-    uint8_t opcode;
-    for (int sreg = Ra; sreg <= PC; sreg++) {
-        for (int dreg = Ra; dreg <= PC; dreg++) {
-            opcode = OPCODE(STO, dreg, sreg);
-            UC_Template[opcode][2] = MI | O(dreg);
-            UC_Template[opcode][3] = RI | MD | O(sreg) | MSR;
-        }
+	uint8_t opcode;
+	for (int sreg = Ra; sreg <= PC; sreg++) {
+		for (int dreg = Ra; dreg <= PC; dreg++) {
+			opcode = OPCODE(STO, dreg, sreg);
+			UC_Template[opcode][2] = MI | O(dreg);
+			UC_Template[opcode][3] = RI | MD | O(sreg) | MSR;
+		}
 
-        // Store Immediate
-        opcode = OPCODE(STO, IMM, sreg);
-        UC_Template[opcode][2] = MI | PE | PO;
-        UC_Template[opcode][3] = RO | MI;
-        UC_Template[opcode][4] = RI | MD | O(sreg) | MSR;
+		// Store Immediate
+		opcode = OPCODE(STO, IMM, sreg);
+		UC_Template[opcode][2] = MI | PE | PO;
+		UC_Template[opcode][3] = RO | MI;
+		UC_Template[opcode][4] = RI | MD | O(sreg) | MSR;
 
-        // PUSH Instructions
-        opcode = OPCODE(STO, SPi, sreg);
-        UC_Template[opcode][2] = MI | ALI | SPO;
-        UC_Template[opcode][3] = RI | MD | O(sreg);
-        UC_Template[opcode][4] = SPI | ALC(INC_A) | ALO | MSR;
-    }
+		// PUSH Instructions
+		opcode = OPCODE(STO, SPi, sreg);
+		UC_Template[opcode][2] = MI | ALI | SPO;
+		UC_Template[opcode][3] = RI | MD | O(sreg);
+		UC_Template[opcode][4] = SPI | ALC(INC_A) | ALO | MSR;
+	}
 }
 
 void write_ALU(void) {
-    uint8_t opcode;
+	uint8_t opcode;
 
-    for (uint8_t reg = Ra; reg <= Rd; reg++) {
-        for (uint8_t alc = 0; alc < 16; alc++) {
-            opcode = ALU_OPCODE(alc, reg);
-            UC_Template[opcode][2] = O(reg) | ALI;
-            UC_Template[opcode][3] = I(reg) | ALC(alc) | ALO | MSR;
-        }
-    }
+	for (uint8_t reg = Ra; reg <= Rd; reg++) {
+		for (uint8_t alc = 0; alc < 16; alc++) {
+			opcode = ALU_OPCODE(alc, reg);
+			UC_Template[opcode][2] = O(reg) | ALI;
+			UC_Template[opcode][3] = I(reg) | ALC(alc) | ALO | MSR;
+		}
+	}
 }
 
 
 uint8_t eeprom_shift(uint32_t data, uint8_t shift) {
-    uint8_t out;
+	uint8_t out;
 
-    out = (data >> 8*shift) & 0xff;
-    return out;
+	out = (data >> 8*shift) & 0xff;
+	return out;
 }
 
 int main(void) {
-    populate_template();
-    FILE *fp;
+	populate_template();
+	FILE *fp;
 
-    write_MOV();
-    write_STO();
-    write_LOD();
-    write_ALU();
+	write_MOV();
+	write_STO();
+	write_LOD();
+	write_ALU();
 
-    uint32_t ucode[4][256][8];
-    uint8_t opcode;
+	uint32_t ucode[4][256][8];
+	uint8_t opcode;
 
-    memcpy(ucode[FLAGS_F0C0], UC_Template, sizeof(UC_Template));
-    memcpy(ucode[FLAGS_F0C1], UC_Template, sizeof(UC_Template));
-    memcpy(ucode[FLAGS_F1C0], UC_Template, sizeof(UC_Template));
-    memcpy(ucode[FLAGS_F1C1], UC_Template, sizeof(UC_Template));
+	memcpy(ucode[FLAGS_F0C0], UC_Template, sizeof(UC_Template));
+	memcpy(ucode[FLAGS_F0C1], UC_Template, sizeof(UC_Template));
+	memcpy(ucode[FLAGS_F1C0], UC_Template, sizeof(UC_Template));
+	memcpy(ucode[FLAGS_F1C1], UC_Template, sizeof(UC_Template));
 
-    // Carry
-    opcode = OPCODE(MOV, IMM, 0b0000);
-    ucode[FLAGS_F0C0][opcode][2] = PE | MSR; // skip the next memory adress
-    ucode[FLAGS_F1C0][opcode][2] = PE | MSR; // skip the next memory adress
+	// Carry
+	opcode = OPCODE(MOV, IMM, 0b0000);
+	ucode[FLAGS_F0C0][opcode][2] = PE | MSR; // skip the next memory adress
+	ucode[FLAGS_F1C0][opcode][2] = PE | MSR; // skip the next memory adress
 
-    ucode[FLAGS_F0C1][opcode][2] = PO | MI | PE;
-    ucode[FLAGS_F0C1][opcode][3] = RO | PI | MSR;
+	ucode[FLAGS_F0C1][opcode][2] = PO | MI | PE;
+	ucode[FLAGS_F0C1][opcode][3] = RO | PI | MSR;
 
-    ucode[FLAGS_F1C1][opcode][2] = PO | MI | PE;
-    ucode[FLAGS_F1C1][opcode][3] = RO | PI | MSR;
+	ucode[FLAGS_F1C1][opcode][2] = PO | MI | PE;
+	ucode[FLAGS_F1C1][opcode][3] = RO | PI | MSR;
 
-    char buffer[10];
+	char buffer[10];
 
-    // Flags
-    for (uint8_t flag = 0; flag <= 2; flag++) {
-        opcode = OPCODE(MOV, IMM, (1<<flag));
-        ucode[FLAGS_F0C0][opcode][2] = PE | MSR; // skip the next memory adress
-        ucode[FLAGS_F0C1][opcode][2] = PE | MSR; // skip the next memory adress
+	// Flags
+	for (uint8_t flag = 0; flag <= 2; flag++) {
+		opcode = OPCODE(MOV, IMM, (1<<flag));
+		ucode[FLAGS_F0C0][opcode][2] = PE | MSR; // skip the next memory adress
+		ucode[FLAGS_F0C1][opcode][2] = PE | MSR; // skip the next memory adress
 
-        ucode[FLAGS_F1C0][opcode][2] = PO | MI | PE;
-        ucode[FLAGS_F1C0][opcode][3] = RO | PI | MSR;
+		ucode[FLAGS_F1C0][opcode][2] = PO | MI | PE;
+		ucode[FLAGS_F1C0][opcode][3] = RO | PI | MSR;
 
-        ucode[FLAGS_F1C1][opcode][2] = PO | MI | PE;
-        ucode[FLAGS_F1C1][opcode][3] = RO | PI | MSR;
-    }
+		ucode[FLAGS_F1C1][opcode][2] = PO | MI | PE;
+		ucode[FLAGS_F1C1][opcode][3] = RO | PI | MSR;
+	}
 
 
 
-    // flip bits
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 256; j++) {
-            for (int k = 0; k < 8; k++) {
-                ucode[i][j][k] = flip_inverted(ucode[i][j][k]);
-            }
-        }
-    }
+	// flip bits
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 256; j++) {
+			for (int k = 0; k < 8; k++) {
+				ucode[i][j][k] = flip_inverted(ucode[i][j][k]);
+			}
+		}
+	}
 
-    fp = fopen("microcode.bin", "w");
+	fp = fopen("microcode.bin", "w");
 
-    uint8_t out[256];
-    for (int ee = 0; ee < 3; ee++) {
-        for (int flag = 0; flag < 4; flag++) {
-            for (int step = 0; step<8; step++) {
-                for (int opcode = 0; opcode <256; opcode++) {
-                    out[opcode] = eeprom_shift(ucode[flag][opcode][step], ee);
-                }
-                fwrite(out, sizeof(out[0]), sizeof(out)/sizeof(out[0]), fp);
-            }
-        }
-    }
-    return 0;
+	uint8_t out[256];
+	for (int ee = 0; ee < 3; ee++) {
+		for (int flag = 0; flag < 4; flag++) {
+			for (int step = 0; step<8; step++) {
+				for (int opcode = 0; opcode <256; opcode++) {
+					out[opcode] = eeprom_shift(ucode[flag][opcode][step], ee);
+				}
+				fwrite(out, sizeof(out[0]), sizeof(out)/sizeof(out[0]), fp);
+			}
+		}
+	}
+	return 0;
 }
 
